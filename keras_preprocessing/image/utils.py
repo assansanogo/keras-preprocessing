@@ -112,7 +112,10 @@ def load_img(path, grayscale=False, color_mode='rgb', target_size=None,
         raise ImportError('Could not import PIL.Image. '
                           'The use of `load_img` requires PIL.')
     if isinstance(path, io.BytesIO):
-        img = pil_image.open(path)
+        try:
+            img = pil_image.open(path)
+        except:
+            img = np.load(path)
     elif isinstance(path, (Path, bytes, str)):
         if isinstance(path, Path):
             path = str(path.resolve())
